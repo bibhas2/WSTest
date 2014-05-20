@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+var chatIn, chatOut, webSocket;
+
+document.addEventListener("DOMContentLoaded", 
+function() {
+	chatIn = document.getElementById("message-input");
+	chatOut = document.getElementById("message-output");
+	
+	webSocket = new WebSocket("ws://localhost:8080/WSTest/simple");
+	webSocket.onopen = function() {
+		console.log("Socket is now open.");
+	};
+	webSocket.onerror = function() {
+		console.log("There was an error.");
+	};
+	webSocket.onmessage = function(e) {
+		console.log("Got message: " + e.data);
+		var p = document.createElement("p");
+		p.innerHTML = e.data;
+		chatOut.appendChild(p);
+	}
+	chatIn.addEventListener("keydown", function(e) {
+		if (e.keyCode == 13) {
+			console.log("Entered: " + this.value);
+			webSocket.send(this.value);
+			this.value = "";
+		}
+	});
+});
+
+</script>
+</head>
+
+<body>
+
+<div id="message-output" style="width: 500px; height: 200px; overflow: scroll; background: grey">
+</div>
+<input type="text" id="message-input" style="width: 500px;"/>
+</body>
+</html>
