@@ -1,0 +1,22 @@
+This is an Eclipse project showing basic uses of WebSocket.
+
+*** To test basic request response
+Add the project to Tomcat 8 server. Open a browser and enter the URL:
+
+http://localhost:8080/WSTest/
+
+Type something in the text box and hit enter. The text will be sent to the
+server via WebSocket. The server will convert the text to upper case
+and send back to the client over WebSocket.
+
+*** To test unsolicited event notification
+
+Open a bunch of browser tabs and enter the URL:
+
+http://localhost:8080/WSTest/
+
+In one of the tabs, run the event broadcaster Servlet:
+
+http://localhost:8080/WSTest/broadcast
+
+All the other tabs should show a "Hello World" message.
